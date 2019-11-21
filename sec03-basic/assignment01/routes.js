@@ -7,7 +7,7 @@ const requestHandler = (req, res) => {
   if (url === "/") {
     res.write("<html>");
     res.write(
-      "<head><title>home page</title><body><h1>Hi, This is my first nodejs assignment</h1></body></head>"
+      "<head><title>register page</title><body><form action='/create-user' method='POST'><input name='username'/><button type='submit'>submit</button></form></body></head>"
     );
     res.write("</html>");
     return res.end();
@@ -19,6 +19,17 @@ const requestHandler = (req, res) => {
     );
     res.write("</html>");
     return res.end();
+  }
+
+  if (url === "/create-user" && method === "POST") {
+    const body = [];
+    req.on("data", chunk => {
+      body.push(chunk);
+    });
+    return req.on("end", () => {
+      const parseBody = Buffer.concat(body).toString();
+      console.log(parseBody);
+    });
   }
 
   res.setHeader("Content-Type", "text/html");
