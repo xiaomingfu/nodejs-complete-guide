@@ -1,0 +1,13 @@
+.main-form {
+  width: 20rem;
+  margin: 0 auto;
+  max-width: 90%;
+}
+.form-group input,
+.form-group label {
+  display: block;
+  width: 100%;
+}
+.form-group {
+  margin: 1rem 0;
+}

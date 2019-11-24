@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Assignment 03</title>
+    <link href="/css/main.css" rel="stylesheet" />
+    <link href="/css/admin.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="main-header">
+      <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+          <li class="main-header__item"><a href="/" class="active">Home</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main class="main-content">
+      <form action="/users" method="POST" class="main-form">
+        <div class="form-group">
+          <label for="username">Name</label
+          ><input name="username" id="username" type="text" />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" />
+        </div>
+        <button type="submit" class="btn btn">Submit</button>
+      </form>
+    </main>
+  </body>
+</html>
