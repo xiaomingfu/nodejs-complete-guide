@@ -1,11 +1,13 @@
 <%- include("./partials/header.ejs") %>
-    
+    <link rel="stylesheet" href="/css/admin.css">
   </head>
   <body>
     <%- include("./partials/nav.ejs") %>
     <main class="main-content">
       <ul class="main-list">
-        <li class="main-list-item">name</li>
+      <% for(let name of names){ %>
+        <li class="main-list-item">username - <%= name.name %></li>
+        <% } %>
       </ul>
     </main>
   <%- include("partials/footer.ejs") %>

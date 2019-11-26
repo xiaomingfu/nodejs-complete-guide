@@ -8,8 +8,9 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
-  console.log(req.body);
-  // names.push({ name: req.body.username });
+  names.push({ name: req.body.username });
+  console.log(names);
   res.redirect("/users");
 });
-module.exports = router;
+exports.routes = router;
+exports.names = names;
