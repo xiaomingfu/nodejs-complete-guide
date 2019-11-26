@@ -37,9 +37,8 @@ main {
 }
 
 .main-header__item:not(:last-child) {
-  margin: 0;
+  margin: 0 1rem;
   padding: 0;
-  margin-right: 2rem;
 }
 
 .main-header__item a {
