@@ -5,9 +5,12 @@
     <%- include("./partials/nav.ejs") %>
     <main class="main-content">
       <ul class="main-list">
-      <% for(let name of names){ %>
-        <li class="main-list-item">username - <%= name.name %></li>
-        <% } %>
+        <% if(names.length > 0){ %>
+          <% names.forEach(name => { %>
+            <li class="main-list-item">username - <%= name.name %></li>
+            <% })}else{ %>
+            <h1>No user</h1>
+            <% } %>
       </ul>
     </main>
   <%- include("partials/footer.ejs") %>
