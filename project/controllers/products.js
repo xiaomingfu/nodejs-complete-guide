@@ -2,7 +2,6 @@ const Product = require("../models/product");
 
 const getAddProduct = (req, res, next) => {
   res.render("add-product", {
-    props: products,
     pageTitle: "Add Product",
     path: "/admin/add-product"
   });
