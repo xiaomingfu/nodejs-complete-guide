@@ -2,19 +2,14 @@ const express = require("express");
 
 const router = express.Router();
 
-const productController = require("../controllers/products.js");
+const adminController = require("../controllers/admin.js");
 // /admin/add-product => GET
-router.get("/add-product", productController.getAddProduct);
+router.get("/admin/add-product", adminController.getAddProduct);
 
 // /admin/product => GET
-router.get("/products", (req, res, next) => {
-  res.render("admin/products");
-});
+router.get("/admin/products", adminController.getProducts);
 
 // /admin/add-product => POST
-router.post("/add-product", productController.postAddProduct);
+router.post("/admin/add-product", adminController.postAddProduct);
 
-router.get("/product-detail", (req, res, next) => {
-  res.render("shop/product-list");
-});
 module.exports = router;
