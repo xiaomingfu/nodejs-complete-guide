@@ -1,5 +1,6 @@
 <%- include("../includes/header.ejs") %>
 <link rel="stylesheet" href="/css/product.css" type="text/css" />
+<link rel="stylesheet" href="/css/forms.css" type="text/css" />
 </head>
 
 <body>
@@ -19,7 +20,7 @@
           />
         </div>
         <div class="card__content">
-          <h2 class="product__price"><%= product.price %></h2>
+          <h2 class="product__price">$<%= product.price %></h2>
           <p class="product__description">
             <%= product.description %>
           </p>
