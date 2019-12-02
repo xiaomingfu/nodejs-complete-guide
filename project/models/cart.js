@@ -9,11 +9,6 @@ const p = path.join(
 );
 
 module.exports = class Cart {
-  //   constructor() {
-  //     this.products = [];
-  //     this.totalPrice = 0;
-  //   }
-
   static addProduct(id, productPrice) {
     //Fetch the previous cart
     fs.readFile(p, (err, fileContent) => {
