@@ -13,15 +13,18 @@ exports.getProducts = (req, res, next) => {
 
 exports.getDetail = (req, res, next) => {
   const prodId = req.params.productId;
-  Product.findById(prodId, product => {
-    res.render("shop/product-detail", {
-      path: `/products/`,
-      product: product,
-      pageTitle: "Product Detail"
+  Product.findById(prodId)
+    .then(([product]) => {
+      console.log(product);
+      res.render("shop/product-detail", {
+        path: `/products`,
+        product: product[0],
+        pageTitle: "Product Detail"
+      });
+    })
+    .catch(err => {
+      console.log(err);
     });
-  }).catch(err => {
-    console.log(err);
-  });
 };
 
 exports.getIndex = (req, res, next) => {
@@ -30,9 +33,7 @@ exports.getIndex = (req, res, next) => {
       res.render("shop/index", {
         prods: rows,
         pageTitle: "Shop",
-        path: "/",
-        hasProducts: products.length > 0,
-        activeShop: true
+        path: "/"
       });
     })
     .catch(err => console.log(err));
