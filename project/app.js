@@ -34,24 +34,20 @@ app.use((req, res, next) => {
       req.user = user;
       next();
     })
-    .catch(err => {
-      console.log(err);
-    });
+    .catch(err => console.log(err));
 });
 
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
-
 app.use(errorController.get404);
 
 Product.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
 User.hasMany(Product);
 
 sequelize
-  .sync({ force: true })
+  .sync()
   .then(result => {
     return User.findByPk(1);
-    // console.log(result);
   })
   .then(user => {
     if (!user) {
