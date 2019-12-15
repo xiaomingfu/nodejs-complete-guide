@@ -9,7 +9,10 @@ const mongoConnect = callback => {
       console.log("Connected!");
       callback(client);
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err);
+      throw err;
+    });
 };
 
 module.exports = mongoConnect;
