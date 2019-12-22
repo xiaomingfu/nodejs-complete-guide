@@ -1,4 +1,7 @@
+const mongodb = require("mongodb");
 const Product = require("../models/product");
+
+const ObjectId = mongodb.ObjectId;
 
 exports.getAddProduct = (req, res, next) => {
   res.render("admin/edit-product", {
@@ -14,7 +17,7 @@ exports.postAddProduct = (req, res, next) => {
   const price = req.body.price;
   const description = req.body.description;
   //req.user also is sequelize object, has createProduct method which automatically create connected model
-  const product = new Product(title, price, description, imageUrl);
+  const product = new Product(title, price, imageUrl, description);
   product
     .save()
     .then(result => {
@@ -52,18 +55,20 @@ exports.getEditProduct = (req, res, next) => {
 
 exports.postEditProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  const updateTitle = req.body.title;
-  const updatePrice = req.body.price;
-  const updateImageUrl = req.body.imageUrl;
-  const updateDesc = req.body.description;
-  Product.findById(prodId)
-    .then(product => {
-      product.title = updateTitle;
-      product.price = updatePrice;
-      product.imageUrl = updateImageUrl;
-      product.description = updateDesc;
-      return product.save();
-    })
+  const updatedTitle = req.body.title;
+  const updatedPrice = req.body.price;
+  const updatedImageUrl = req.body.imageUrl;
+  const updatedDesc = req.body.description;
+
+  const product = new Product(
+    updatedTitle,
+    updatedPrice,
+    updatedImageUrl,
+    updatedDesc,
+    new ObjectId(prodId)
+  );
+  product
+    .save()
     .then(result => {
       console.log("Update data");
       res.redirect("/admin/products");
