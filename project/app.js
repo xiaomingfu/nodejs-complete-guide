@@ -27,14 +27,14 @@ const shopRoutes = require("./routes/shop");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use((req, res, next) => {
-  User.findById("5e00720c06260824e9398745")
-    .then(user => {
-      req.user = new User(user.name, user.email, user.cart, user._id);
-      next();
-    })
-    .catch(err => console.log(err));
-});
+// app.use((req, res, next) => {
+//   User.findById("5e00720c06260824e9398745")
+//     .then(user => {
+//       req.user = new User(user.name, user.email, user.cart, user._id);
+//       next();
+//     })
+//     .catch(err => console.log(err));
+// });
 
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
@@ -42,10 +42,11 @@ app.use(errorController.get404);
 
 mongoose
   .connect(
-    "mongodb+srv://xiaoming:111@cluster0-fvtw9.mongodb.net/test?retryWrites=true&w=majority"
+    "mongodb+srv://xiaoming:111@cluster0-fvtw9.mongodb.net/shop?retryWrites=true"
   )
   .then(result => {
     app.listen(3000);
+    console.log("Connect!");
   })
   .catch(err => {
     console.log(err);
