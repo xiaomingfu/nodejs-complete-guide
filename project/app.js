@@ -27,14 +27,14 @@ const shopRoutes = require("./routes/shop");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// app.use((req, res, next) => {
-//   User.findById("5e00720c06260824e9398745")
-//     .then(user => {
-//       req.user = new User(user.name, user.email, user.cart, user._id);
-//       next();
-//     })
-//     .catch(err => console.log(err));
-// });
+app.use((req, res, next) => {
+  User.findById("5e085016273af66c1f9b7ff1")
+    .then(user => {
+      req.user = user;
+      next();
+    })
+    .catch(err => console.log(err));
+});
 
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
@@ -45,6 +45,17 @@ mongoose
     "mongodb+srv://xiaoming:111@cluster0-fvtw9.mongodb.net/shop?retryWrites=true"
   )
   .then(result => {
+    User.findOne().then(user => {
+      if (!user) {
+        const user = new User({
+          name: "Xiaoming",
+          email: "xiaoming@test.com",
+          cart: { items: [] }
+        });
+        user.save();
+      }
+    });
+
     app.listen(3000);
     console.log("Connect!");
   })
