@@ -14,7 +14,7 @@ app.set("views", "views");
 
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
-const autoRoutes = require("./routes/auth");
+const authRoutes = require("./routes/auth");
 
 // Test code
 // db.execute("SELECT * FROM products")
