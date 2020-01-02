@@ -24,3 +24,10 @@ exports.postLogin = (req, res, next) => {
   //   res.setHeader("Set-Cookie", "loggedIn=true; HttpOnly");
   //   req.isLoggedIn = true;
 };
+
+exports.postLogout = (req, res, next) => {
+  req.session.destroy(err => {
+    console.log(err);
+    res.redirect("/");
+  });
+};
