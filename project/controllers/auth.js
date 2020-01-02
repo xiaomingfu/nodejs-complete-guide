@@ -28,6 +28,34 @@ exports.postLogin = (req, res, next) => {
   //   req.isLoggedIn = true;
 };
 
+exports.getSignup = (req, res, next) => {
+  res.render("auth/signup", {
+    path: "/signup",
+    pageTitle: "signup",
+    isAuthenticated: false
+  });
+};
+
+exports.postSignup = (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const comfirmedPassword = req.body.comfirmedPassword;
+  User.findOne({ email: email })
+    .then(userDoc => {
+      if (userDoc) {
+        return res.redirectd("/signup");
+      }
+      const user = new User({
+        email: email,
+        password: password,
+        cart: { items: [] }
+      });
+      return user.save();
+    })
+    .then(result => res.redirect("/login"))
+    .catch(err => console.log(err));
+};
+
 exports.postLogout = (req, res, next) => {
   req.session.destroy(err => {
     console.log(err);
