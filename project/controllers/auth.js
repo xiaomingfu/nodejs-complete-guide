@@ -5,7 +5,7 @@ exports.getLogin = (req, res, next) => {
   //     .get("cookie")
   //     .trim()
   //     .split("=")[1];
-  console.log(req.session.user);
+  console.log(req.user);
   res.render("auth/login", {
     path: "/login",
     pageTitle: "login",
