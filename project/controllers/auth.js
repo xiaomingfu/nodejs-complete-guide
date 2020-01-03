@@ -15,14 +15,30 @@ exports.getLogin = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-  User.findById("5e085016273af66c1f9b7ff1")
+  const email = req.body.email;
+  const password = req.body.password;
+  User.findOne({ email: email })
     .then(user => {
-      req.session.isLoggedIn = true;
-      req.session.user = user;
-      req.session.save(err => {
-        console.log(err);
-        res.redirect("/");
-      });
+      if (!user) {
+        return res.redirect("login");
+      }
+      bcrypt
+        .compare(password, use.password)
+        .then(doMatch => {
+          if (doMatch) {
+            req.session.isLoggedIn = true;
+            req.session.user = user;
+            return req.session.save(err => {
+              console.log(err);
+              res.redirect("/");
+            });
+          }
+          res.redirect("/login");
+        })
+        .catch(err => {
+          console.log(err);
+          res.redirect("/login");
+        });
     })
     .catch(err => console.log(err));
   //   res.setHeader("Set-Cookie", "loggedIn=true; HttpOnly");
@@ -44,7 +60,7 @@ exports.postSignup = (req, res, next) => {
   User.findOne({ email: email })
     .then(userDoc => {
       if (userDoc) {
-        return res.redirectd("/signup");
+        return res.redirect("/signup");
       }
       return bcrypt
         .hash("password", 12)
