@@ -20,10 +20,10 @@ exports.postLogin = (req, res, next) => {
   User.findOne({ email: email })
     .then(user => {
       if (!user) {
-        return res.redirect("login");
+        return res.redirect("/login");
       }
       bcrypt
-        .compare(password, use.password)
+        .compare(password, user.password)
         .then(doMatch => {
           if (doMatch) {
             req.session.isLoggedIn = true;
@@ -63,7 +63,7 @@ exports.postSignup = (req, res, next) => {
         return res.redirect("/signup");
       }
       return bcrypt
-        .hash("password", 12)
+        .hash(password, 12)
         .then(hashedPassword => {
           const user = new User({
             email: email,
