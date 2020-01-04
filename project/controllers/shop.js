@@ -41,9 +41,7 @@ exports.getIndex = (req, res, next) => {
       res.render("shop/index", {
         prods: products,
         pageTitle: "Shop",
-        path: "/",
-        isAuthenticated: req.session.isLoggedIn,
-        csrfToken: req.csrfToken()
+        path: "/"
       });
     })
     .catch(err => {
@@ -105,7 +103,7 @@ exports.postOrder = (req, res, next) => {
       console.log(products);
       const order = new Order({
         user: {
-          name: req.user.name,
+          email: req.user.email,
           userId: req.user
         },
         products: products
