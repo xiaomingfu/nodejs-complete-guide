@@ -7,10 +7,16 @@ exports.getLogin = (req, res, next) => {
   //     .trim()
   //     .split("=")[1];
   console.log(req.user);
+  let message = req.flash("error");
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
   res.render("auth/login", {
     path: "/login",
     pageTitle: "login",
-    errorMessage: req.flash("error")
+    errorMessage: message
   });
 };
 

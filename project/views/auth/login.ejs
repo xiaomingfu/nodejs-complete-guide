@@ -8,8 +8,8 @@
    <%- include('../includes/navigation.ejs') %>
 
     <main>
-        <% if(errorMessage){ %>
-            <%= errorMessage %>
+        <% if (errorMessage) { %>
+           <div class="user-message user-message--error"><%= errorMessage %></div> 
         <% } %>
         <form class="auth-form" action="/login" method="POST">
             <div class="form-control">
