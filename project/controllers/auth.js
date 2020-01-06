@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
       api_key:
-        "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"
+        "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"
     }
   })
 );
@@ -157,14 +157,19 @@ exports.postReset = (req, res, next) => {
         return user.save();
       })
       .then(result => {
+        res.redirect("/");
         transporter.sendMail({
           to: req.body.email,
           from: "shop@node-complete.com",
           subject: "Reset Password",
-          html: `<p1>You requested to reset password.</p1>
-          <p>You can click this <a href="http://localhost:3000/reset/${token}">link</a> to reset your password.</p>`
+          html: `
+            <p1>You requested to reset password.</p1>
+            <p>You can click this <a href="http://localhost:3000/reset/${token}">link</a> to reset your password.</p>
+          `
         });
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+      });
   });
 };
