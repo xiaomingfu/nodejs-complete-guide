@@ -14,15 +14,18 @@
         <form class="auth-form" action="/signup" method="POST" novalidate>
             <div class="form-control">
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" value="<%= oldInput.email %>">
+                <input class="<%= validationErrors.find(e => e.param === "email") ? "invalid" : "" %>"
+                type="email" name="email" id="email" value="<%= oldInput.email %>">
             </div>
             <div class="form-control">
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" value="<%= oldInput.password %>">
+                <input class="<%= validationErrors.find(e => e.param === "password") ? "invalid" : "" %>"
+                 type="password" name="password" id="password" value="<%= oldInput.password %>">
             </div>
             <div class="form-control">
                 <label for="confirmedPassword">Confirm Password</label>
-                <input type="password" name="confirmedPassword" id="confirmedPassword" value="<%= oldInput.confirmedPassword %>">
+                <input class="<%= validationErrors.find(e => e.param === "confirmedPassword") ? "invalid" : "" %>"
+                type="password" name="confirmedPassword" id="confirmedPassword" value="<%= oldInput.confirmedPassword %>">
             </div>
             <input type="hidden" value="<%= csrfToken %>" name="_csrf">
             <button class="btn" type="submit">Signup</button>

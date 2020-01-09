@@ -88,7 +88,8 @@ exports.getSignup = (req, res, next) => {
     pageTitle: "signup",
     isAuthenticated: false,
     errorMessage: message,
-    oldInput: { email: "", password: "", confirmedPassword: "" }
+    oldInput: { email: "", password: "", confirmedPassword: "" },
+    validationErrors: []
   });
 };
 
@@ -107,7 +108,8 @@ exports.postSignup = (req, res, next) => {
         email: email,
         password: password,
         confirmedPassword: req.body.confirmedPassword
-      }
+      },
+      validationErrors: errors.array()
     });
   }
   bcrypt
