@@ -8,7 +8,18 @@ const User = require("../models/user");
 
 router.get("/login", authController.getLogin);
 
-router.post("/login", authController.postLogin);
+router.post(
+  "/login",
+  [
+    body("email")
+      .isEmail()
+      .withMessage("Please enter a valid email."),
+    body("password", "Password has to be valid")
+      .isLength({ min: 5 })
+      .isAlphanumeric()
+  ],
+  authController.postLogin
+);
 
 router.get("/signup", authController.getSignup);
 
@@ -17,7 +28,7 @@ router.post(
   [
     check("email")
       .isEmail()
-      .withMessage("Please entere a valid email.")
+      .withMessage("Please enter a valid email.")
       .custom((value, { req }) => {
         // if (value === "test@test.com") {
         //   throw new Error("This email address is forbidden.");
