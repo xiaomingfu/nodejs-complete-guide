@@ -41,11 +41,11 @@ router.post(
             );
           }
         });
-      })
-      .body(
-        "password",
-        "Please enter a password with only numbers and text and at least 5 character."
-      )
+      }),
+    body(
+      "password",
+      "Please enter a password with only numbers and text and at least 5 character."
+    )
       .isLength({ min: 5 })
       .isAlphanumeric(),
     body("confirmedPassword").custom((value, { req }) => {

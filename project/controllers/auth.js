@@ -40,7 +40,7 @@ exports.postLogin = (req, res, next) => {
 
   const error = validationResult(req);
   if (!error.isEmpty()) {
-    return res.render("ayth/login", {
+    return res.status(422).render("ayth/login", {
       path: "/login",
       pageTitle: "Login",
       errorMessage: errors.array[0].msg
@@ -87,7 +87,8 @@ exports.getSignup = (req, res, next) => {
     path: "/signup",
     pageTitle: "signup",
     isAuthenticated: false,
-    errorMessage: message
+    errorMessage: message,
+    oldInput: { email: "", password: "", confirmedPassword: "" }
   });
 };
 
@@ -101,7 +102,12 @@ exports.postSignup = (req, res, next) => {
     return res.status(422).render("auth/signup", {
       path: "/signup",
       pageTitle: "Singup",
-      errorMessage: errors.array()[0].msg
+      errorMessage: errors.array()[0].msg,
+      oldInput: {
+        email: email,
+        password: password,
+        confirmedPassword: req.body.confirmedPassword
+      }
     });
   }
   bcrypt
