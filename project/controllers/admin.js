@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const { validationResult } = require("express-validator/check");
 
 const Product = require("../models/product");
@@ -40,7 +39,6 @@ exports.postAddProduct = (req, res, next) => {
   }
   //req.user also is sequelize object, has createProduct method which automatically create connected model
   const product = new Product({
-    _id: new mongoose.Types.ObjectId("5e183a63711436bf6be8e3e7"),
     title: title,
     price: price,
     description: description,
@@ -98,7 +96,9 @@ exports.getEditProduct = (req, res, next) => {
       });
     })
     .catch(err => {
-      console.log(err);
+      const error = new Error(err);
+      err.httpStatusCode = 500;
+      return next(error);
     });
 };
 
@@ -144,7 +144,9 @@ exports.postEditProduct = (req, res, next) => {
     })
 
     .catch(err => {
-      console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 
@@ -161,7 +163,9 @@ exports.getProducts = (req, res, next) => {
       });
     })
     .catch(err => {
-      console.log(err);
+      const error = new Error(err);
+      error.httpStatus.Code = 500;
+      return next(error);
     });
 };
 
@@ -172,5 +176,9 @@ exports.postDeleteProduct = (req, res, next) => {
       console.log("Destroyed");
       res.redirect("/admin/products");
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const error = new Error(err);
+      error.htttpStatus.Code = 500;
+      return next(error);
+    });
 };
