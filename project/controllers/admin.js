@@ -1,10 +1,15 @@
+const { validationResult } = require("express-validator/check");
+
 const Product = require("../models/product");
 
 exports.getAddProduct = (req, res, next) => {
   res.render("admin/edit-product", {
     pageTitle: "Add Product",
     path: "/admin/add-product",
-    editing: false
+    editing: false,
+    hasError: false,
+    errorMessage: null,
+    validationError: []
   });
 };
 
@@ -13,6 +18,25 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    return res.status(422).render("admin/edit-product", {
+      path: "admin/edit",
+      pageTitle: "Add Product",
+      editing: false,
+      hasError: true,
+      errorMessage: errors.array()[0].msg,
+      validationError: errors.array(),
+      product: {
+        title: title,
+        imageUrl: imageUrl,
+        price: price,
+        description: description
+      }
+    });
+  }
   //req.user also is sequelize object, has createProduct method which automatically create connected model
   const product = new Product({
     title: title,
@@ -43,11 +67,13 @@ exports.getEditProduct = (req, res, next) => {
       if (!product) {
         return res.redirect("/");
       }
-      res.render("admin/edit-product", {
+      return res.render("admin/edit-product", {
         pageTitle: "Edit Product",
         path: "/admin/edit-product",
         editing: editMode,
-        product: product
+        product: product,
+        hasError: false,
+        errorMessage: null
       });
     })
     .catch(err => {
