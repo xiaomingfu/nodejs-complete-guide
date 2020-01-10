@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const { validationResult } = require("express-validator/check");
 
 const Product = require("../models/product");
@@ -39,6 +40,7 @@ exports.postAddProduct = (req, res, next) => {
   }
   //req.user also is sequelize object, has createProduct method which automatically create connected model
   const product = new Product({
+    _id: new mongoose.Types.ObjectId("5e183a63711436bf6be8e3e7"),
     title: title,
     price: price,
     description: description,
@@ -52,7 +54,22 @@ exports.postAddProduct = (req, res, next) => {
       res.redirect("/admin/products");
     })
     .catch(err => {
-      console.log(err);
+      console.log("An error occurred!");
+      // return res.status(500).render("admin/edit-product", {
+      //   path: "/admin/edit-product",
+      //   pageTitle: "Add Product",
+      //   product: {
+      //     title: title,
+      //     price: price,
+      //     description: description,
+      //     imageUrl: imageUrl
+      //   },
+      //   editing: false,
+      //   hasError: true,
+      //   errorMessage: "Database opertaion failed, please try again.",
+      //   validationError: []
+      // });
+      res.redirect("/500");
     });
 };
 
