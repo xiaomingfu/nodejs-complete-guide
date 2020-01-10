@@ -41,7 +41,6 @@ router.post(
   [
     body("title")
       .isLength({ min: 3 })
-      .isString()
       .trim(),
     body("imageUrl")
       .isURL()
