@@ -173,8 +173,8 @@ exports.getInvoice = (req, res, next) => {
         "Content-Disposition",
         "inline; filename='" + invoiceName + "'"
       );
-      pdfDoc.pip(fs.createWriteStream(invoicePath));
-      pdfDoc.pip(res);
+      pdfDoc.pipe(fs.createWriteStream(invoicePath));
+      pdfDoc.pipe(res);
 
       pdfDoc.text("Hello world!");
       pdfDoc.end();
