@@ -27,7 +27,7 @@ exports.getProducts = (req, res, next) => {
         nextPage: page + 1,
         previousPage: page - 1,
         hasNextPage: page * ITEMS_PER_PAGE < totalItems,
-        havePreviousPage: page > 1,
+        hasPreviousPage: page > 1,
         lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
       });
     })
