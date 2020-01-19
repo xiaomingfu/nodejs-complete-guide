@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const PDFDocument = require("pdfkit");
+const stripe = require("stripe")("sk_test_ZO9G5WczHAoGpDDnNxIvTstd00XzF2oCtY");
 
 const Product = require("../models/product");
 const Order = require("../models/order");
@@ -130,6 +131,50 @@ exports.postCartDelete = (req, res, next) => {
     .removeFromCart(prodId)
     .then(result => {
       res.redirect("/cart");
+    })
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
+};
+
+exports.getCheckout = (req, res, next) => {
+  let products;
+  let total = 0;
+  req.user
+    .populate("cart.items.productId")
+    .execPopulate()
+    .then(user => {
+      products = user.cart.items;
+      total = 0;
+      products.forEach(p => {
+        total += p.quantity * p.productId.price;
+      });
+      return stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        line_items: products.map(p => {
+          return {
+            name: p.productId.title,
+            description: p.productId.description,
+            amount: p.productId.price * 100,
+            currency: "usd",
+            quantity: p.quantyty
+          };
+        }),
+        success_url:
+          req.protocal + "://" + req.get("host") + "/checkout/success",
+        cancel_url: req.protocal + "://" + req.get("host") + "/checkout/cancel"
+      });
+    })
+    .then(session => {
+      res.render("shop/checkout", {
+        pageTitle: "Checkout",
+        path: "/checkout",
+        products: products,
+        totalSum: total,
+        sessionId: session.id
+      });
     })
     .catch(err => {
       const error = new Error(err);
