@@ -159,12 +159,12 @@ exports.getCheckout = (req, res, next) => {
             description: p.productId.description,
             amount: p.productId.price * 100,
             currency: "usd",
-            quantity: p.quantyty
+            quantity: p.quantity
           };
         }),
         success_url:
-          req.protocal + "://" + req.get("host") + "/checkout/success",
-        cancel_url: req.protocal + "://" + req.get("host") + "/checkout/cancel"
+          req.protocol + "://" + req.get("host") + "/checkout/success",
+        cancel_url: req.protocol + "://" + req.get("host") + "/checkout/cancel"
       });
     })
     .then(session => {
@@ -183,7 +183,7 @@ exports.getCheckout = (req, res, next) => {
     });
 };
 
-exports.postOrder = (req, res, next) => {
+exports.getCheckoutSuccess = (req, res, next) => {
   req.user
     .populate("cart.items.productId")
     .execPopulate()
