@@ -79,4 +79,12 @@ exports.updatePost = (req, res, next) => {
   const title = req.body.title;
   const content = req.body.content;
   let imageUrl = req.body.imageUrl;
+  if (req.file) {
+    imageUrl = req.file.path;
+  }
+  if (!imageUrl) {
+    const error = new Error("No file picked");
+    error.statusCode = 422;
+    throw error;
+  }
 };
