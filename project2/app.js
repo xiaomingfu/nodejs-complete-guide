@@ -62,8 +62,10 @@ mongoose
     "mongodb+srv://xiaoming:111@cluster0-fvtw9.mongodb.net/messages?retryWrites=true"
   )
   .then(result => {
-    app.listen(8080, () => {
-      console.log("start!");
+    const server = app.listen(8080);
+    const io = require("socket.io")(server);
+    io.on("connection", socket => {
+      console.log("Client connection!");
     });
   })
   .catch(err => {
