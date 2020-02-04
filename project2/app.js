@@ -61,13 +61,7 @@ mongoose
   .connect(
     "mongodb+srv://xiaoming:111@cluster0-fvtw9.mongodb.net/messages?retryWrites=true"
   )
-  .then(result => {
-    const server = app.listen(8080);
-    const io = require("./socket").init(server);
-    io.on("connection", socket => {
-      console.log("Client connection!");
-    });
-  })
+  .then(app.listen(8080))
   .catch(err => {
     console.log(err);
   });
