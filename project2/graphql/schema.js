@@ -27,10 +27,15 @@ input UserInputData {
     password:String!
 }
 
+type RootQery {
+    hello: String
+}
+
 type RootMutation {
     createUser(userInput:UserInputData):User!
 }
 
 schema {
+    query:RootQuery
    mutation:RootMutation
 `);
