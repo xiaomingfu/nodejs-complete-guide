@@ -3,6 +3,7 @@ const validator = require("validator");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
+const Post = require("../models/post");
 
 module.exports = {
   createUser: async function({ userInput }, req) {
@@ -60,12 +61,18 @@ module.exports = {
     const errors = [];
     if (
       !validator.isLength(postInput.title, { min: 5 }) ||
+      !validator.isEmpty(postInput.title)
+    ) {
+      errors.push({ message: "Title is invalid." });
+    }
+    if (
+      !validator.isEmpty(postInput.content) ||
       !validator.isLength(postInput.content, { min: 5 })
     ) {
-      errors.push({ message: "Too short!" });
+      errors.push({ message: "Content is invalid." });
     }
     if (errors.length > 0) {
-      const error = new Error("Too short!");
+      const error = new Error("Invalid input!");
       error.code = 422;
       error.data = errors;
       throw error;
@@ -73,14 +80,17 @@ module.exports = {
     const post = new Post({
       title: postInput.title,
       content: postInput.content,
-      imageUrl: postInput.imageUrl,
-      description: postInput.description,
-      price: postInput.price
+      imageUrl: postInput.imageUrl
     });
-    const createPost = await post.save();
-    const existingUser = await User.findById(req.userId);
-    existingUser.posts.push(createPost);
-    await user.save()
-    }
+    const createdPost = await post.save();
+    return {
+      ...createdPost._doc,
+      _id: createdPost._id.toString(),
+      createdAt: createdPost.createdAt.toISOString(),
+      updatedAt: createdAt.updatedAt.toISOString()
+    };
+    // const existingUser = await User.findById(req.userId);
+    // existingUser.posts.push(createPost);
+    // await user.save()
   }
 };

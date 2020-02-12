@@ -34,8 +34,7 @@ input UserInputData {
 input PostInputData {
     title:String!
     imageUrl:String!
-    description:String!
-    price:Integer!
+    content:String!
 }
 
 type RootQuery {
