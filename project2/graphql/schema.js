@@ -27,7 +27,7 @@ input UserInputData {
     password:String!
 }
 
-type RootQery {
+type RootQuery {
     hello: String
 }
 
@@ -38,4 +38,5 @@ type RootMutation {
 schema {
     query:RootQuery
    mutation:RootMutation
+}
 `);
