@@ -31,6 +31,12 @@ input UserInputData {
     name:String!
     password:String!
 }
+input PostInputData {
+    title:String!
+    imageUrl:String!
+    description:String!
+    price:Integer!
+}
 
 type RootQuery {
     login(email:String!, password:String!):AuthData!
@@ -38,6 +44,7 @@ type RootQuery {
 
 type RootMutation {
     createUser(userInput:UserInputData):User!
+    createPost(postInput:PostInputData):Post!
 }
 
 schema {

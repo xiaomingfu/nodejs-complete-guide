@@ -55,5 +55,32 @@ module.exports = {
       { expiresIn: "1h" }
     );
     return { token: token, userId: user._id.toString() };
+  },
+  createPost: async function({ postInput }, req) {
+    const errors = [];
+    if (
+      !validator.isLength(postInput.title, { min: 5 }) ||
+      !validator.isLength(postInput.content, { min: 5 })
+    ) {
+      errors.push({ message: "Too short!" });
+    }
+    if (errors.length > 0) {
+      const error = new Error("Too short!");
+      error.code = 422;
+      error.data = errors;
+      throw error;
+    }
+    const post = new Post({
+      title: postInput.title,
+      content: postInput.content,
+      imageUrl: postInput.imageUrl,
+      description: postInput.description,
+      price: postInput.price
+    });
+    const createPost = await post.save();
+    const existingUser = await User.findById(req.userId);
+    existingUser.posts.push(createPost);
+    await user.save()
+    }
   }
 };
