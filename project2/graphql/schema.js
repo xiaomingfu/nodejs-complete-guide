@@ -26,6 +26,12 @@ type AuthData{
     userId:String!
 }
 
+type PostData {
+    posts:[Post!]!
+    totalPosts:Int!
+
+}
+
 input UserInputData {
     email:String!
     name:String!
@@ -39,6 +45,7 @@ input PostInputData {
 
 type RootQuery {
     login(email:String!, password:String!):AuthData!
+    posts:PostData!
 }
 
 type RootMutation {
