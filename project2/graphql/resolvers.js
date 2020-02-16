@@ -94,14 +94,14 @@ module.exports = {
       imageUrl: postInput.imageUrl,
       creator: user
     });
-    const createdPost = await post.save();
-    user.posts.push(createdPost);
+    const createPost = await post.save();
+    user.posts.push(createPost);
     await user.save();
     return {
-      ...createdPost._doc,
-      _id: createdPost._id.toString(),
-      createdAt: createdPost.createdAt.toISOString(),
-      updatedAt: createdPost.updatedAt.toISOString()
+      ...createPost._doc,
+      _id: createPost._id.toString(),
+      createdAt: createPost.createdAt.toISOString(),
+      updatedAt: createPost.updatedAt.toISOString()
     };
   },
   posts: async function({ page }, req) {
