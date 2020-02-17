@@ -16,7 +16,7 @@ class SinglePost extends Component {
     const postId = this.props.match.params.postId;
     const graphqlQuery = {
       query: `{
-        post(id:"${postId}){
+        post(id:"${postId}"){
           title
           imageUrl
           creator{

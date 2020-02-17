@@ -70,7 +70,6 @@ class Feed extends Component {
     
         totalPosts
         }
-  
       }`
     };
     fetch("http://localhost:8080/graphql", {
