@@ -173,10 +173,29 @@ class Feed extends Component {
               name
             }
             createdAt
+            imageUrl
           }
         }
         `
         };
+
+        if (this.state.editPost) {
+          graphqlQuery = {
+            query: `
+            mutation {
+            updatePost(id:"${this.state.editPost._id}",postInput:{title:"${postData.title}",imageUrl:"${imageUrl}",content:"${postData.content}"}){
+              _id
+              title
+              content
+              creator{
+                name
+              }
+              createdAt
+              imageUrl
+            }
+          }`
+          };
+        }
 
         return fetch("http://localhost:8080/graphql", {
           method: "POST",
@@ -191,20 +210,25 @@ class Feed extends Component {
         return res.json();
       })
       .then(resData => {
+        console.log(resData);
         if (resData.errors && resData.errors[0].status === 422) {
           throw new Error("Validation failed.");
         }
         if (resData.errors) {
           throw new Error("User login failed!");
         }
-        console.log(resData);
+
+        let resDataField = "createPost";
+        if (this.state.editPost) {
+          resDataField = "updatePost";
+        }
         const post = {
-          _id: resData.data.createPost._id,
-          title: resData.data.createPost.title,
-          content: resData.data.createPost.content,
-          creator: resData.data.createPost.creator,
-          createdAt: resData.data.createPost.createdAt,
-          imagePath: resData.data.createPost.imageUrl
+          _id: resData.data[resDataField]._id,
+          title: resData.data[resDataField].title,
+          content: resData.data[resDataField].content,
+          creator: resData.data[resDataField].creator,
+          createdAt: resData.data[resDataField].createdAt,
+          imagePath: resData.data[resDataField].imageUrl
         };
         this.setState(prevState => {
           let updatedPosts = [...prevState.posts];
