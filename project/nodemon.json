@@ -1,0 +1,8 @@
+{
+  "env": {
+    "MONGO_USER": "xiaoming",
+    "MONGO_PASSWORD": "111",
+    "MONGO_DEFAULT_DATABASE": "shop",
+    "STRIPE_KEY": "sk_test_ZO9G5WczHAoGpDDnNxIvTstd00XzF2oCtY"
+  }
+}

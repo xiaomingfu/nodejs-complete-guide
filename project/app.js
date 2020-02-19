@@ -7,12 +7,15 @@ const MongoDBStore = require("connect-mongodb-session")(session);
 const csrf = require("csurf");
 const flash = require("connect-flash");
 const multer = require("multer");
+const helmet = require("helmet");
+const compression = require("compression");
+const morgan = require("morgan");
+const fs = require("fs");
 
 const errorController = require("./controllers/error");
 const User = require("./models/user");
 
-const MONGODB_URI =
-  "mongodb+srv://xiaoming:111@cluster0-fvtw9.mongodb.net/shop?retryWrites=true";
+const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-fvtw9.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}?retryWrites=true`;
 
 const app = express();
 const store = new MongoDBStore({
@@ -50,6 +53,14 @@ const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const authRoutes = require("./routes/auth");
 
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  { flags: "a" }
+);
+
+app.use(helmet());
+app.use(compression());
+app.use(morgan("combined", { stream: accessLogStream }));
 // Test code
 // db.execute("SELECT * FROM products")
 //   .then(result => {
@@ -134,7 +145,7 @@ mongoose
       }
     });
 
-    app.listen(3000);
+    app.listen(process.env.PORT || 3000);
     console.log("Connect!");
   })
   .catch(err => {
