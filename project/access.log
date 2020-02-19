@@ -1,0 +1,5 @@
+::1 - - [19/Feb/2020:02:39:50 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
+::1 - - [19/Feb/2020:02:39:50 +0000] "GET /css/main.css HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
+::1 - - [19/Feb/2020:02:39:50 +0000] "GET /css/product.css HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
+::1 - - [19/Feb/2020:02:39:50 +0000] "GET /js/main.js HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
+::1 - - [19/Feb/2020:02:39:50 +0000] "GET /images/2020-01-12T06:06:31.278Z-sincerely-media-nGrfKmtwv24-unsplash.jpg HTTP/1.1" 404 - "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
