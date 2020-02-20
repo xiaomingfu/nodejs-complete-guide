@@ -29,6 +29,8 @@
     "stripe": "^8.4.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.0.1",
     "nodemon": "^2.0.0"
   },
   "scripts": {
