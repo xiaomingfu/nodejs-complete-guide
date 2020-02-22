@@ -16,8 +16,17 @@ describe("Auth middleware", function() {
 
   it("should thorw an error if the authentication header is only one string.", function() {
     const req = {
-      get: function(hearderName) {
+      get: function(headerName) {
         return "xyz";
+      }
+    };
+    expect(authMiddleware.bind(this, req, {}, () => {})).to.throw();
+  });
+
+  it("should throw an error if the token cannot be verified", function() {
+    const req = {
+      get: function(headerName) {
+        return "Bearer xyz";
       }
     };
     expect(authMiddleware.bind(this, req, {}, () => {})).to.throw();
