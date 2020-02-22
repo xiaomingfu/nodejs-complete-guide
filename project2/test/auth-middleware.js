@@ -1,4 +1,5 @@
 const expect = require("chai").expect;
+const jwt = require("jsonwebtoken");
 
 const authMiddleware = require("../middleware/auth");
 
@@ -30,5 +31,17 @@ describe("Auth middleware", function() {
       }
     };
     expect(authMiddleware.bind(this, req, {}, () => {})).to.throw();
+  });
+  it("should throw an error if does not have userId property", function() {
+    const req = {
+      get: function(headerName) {
+        return "Bearer safasdfdfasdf";
+      }
+    };
+    jwt.verify = function() {
+      return { userId: "abc" };
+    };
+    authMiddleware(req, {}, () => {});
+    expect(req).to.have.property("userId");
   });
 });
