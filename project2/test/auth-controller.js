@@ -25,6 +25,9 @@ describe("Auth Controller", function() {
         done();
       });
   });
+  beforeEach(function() {});
+  afterEach(function() {});
+
   it("should throw an error with code 500 if accessing the database fails", function(done) {
     sinon.stub(User, "findOne");
     User.findOne.throws();
@@ -41,7 +44,6 @@ describe("Auth Controller", function() {
       expect(result).to.have.property("statusCode", 500);
       done();
     });
-
     User.findOne.restore();
   });
 
