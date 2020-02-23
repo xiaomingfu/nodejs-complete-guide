@@ -1,4 +1,4 @@
-const expect = require("mocha").expect;
+const expect = require("chai").expect;
 const sinon = require("sinon");
 const mongoose = require("mongoose");
 
@@ -25,22 +25,22 @@ describe("Auth Controller - signin", function() {
 
     User.findOne.restore();
   });
+});
 
-  it("should send a valid user status for an existing user", function(done) {
-    mongoose
-      .connect(
-        "mongodb+srv://xiaoming:111@cluster0-fvtw9.mongodb.net/test-message?retryWrites=true"
-      )
-      .then(result => {
-        const user = new User({
-          username: "test",
-          email: "test@test.com",
-          password: "aaaaaa",
-          posts: []
-        });
-        return user.save();
-      })
-      .then(() => {})
-      .catch(err => console.log(err));
-  });
+it("should send a valid user status for an existing user", function(done) {
+  mongoose
+    .connect(
+      "mongodb+srv://xiaoming:111@cluster0-fvtw9.mongodb.net/test-message?retryWrites=true"
+    )
+    .then(result => {
+      const user = new User({
+        name: "test",
+        email: "test@test.com",
+        password: "aaaaaa",
+        posts: []
+      });
+      return user.save();
+    })
+    .then(() => {})
+    .catch(err => console.log(err));
 });
