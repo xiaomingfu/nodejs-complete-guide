@@ -34,13 +34,34 @@ it("should send a valid user status for an existing user", function(done) {
     )
     .then(result => {
       const user = new User({
-        name: "test",
+        name: "test1",
         email: "test@test.com",
         password: "aaaaaa",
-        posts: []
+        posts: [],
+        _id: "5e33d0cabaea4935fbb23f66"
       });
       return user.save();
     })
-    .then(() => {})
+    .then(() => {
+      const req = {
+        userId: "5e33d0cabaea4935fbb23f66"
+      };
+      const res = {
+        statusCode: 500,
+        userStatus: null,
+        status: function(code) {
+          this.statusCode = code;
+          return this;
+        },
+        json: function(data) {
+          this.userStatus = data.status;
+        }
+      };
+      AuthController.getUserStatus(req, res, () => {}).then(() => {
+        expect(res.statusCode).to.be.equal(200);
+        expect(res.userStatus).to.be.equal("I am new!");
+        done();
+      });
+    })
     .catch(err => console.log(err));
 });
